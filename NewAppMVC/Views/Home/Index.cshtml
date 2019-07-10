@@ -1,0 +1,45 @@
+﻿@using PresentationLayer.models;
+@using DataLayer.Enum;
+
+@model List<CategoryViewModel>
+@{
+  ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+  <div class="col-md-12">
+
+    <ul>
+      @foreach (var item in Model)
+      {
+        <li>
+          <h2>
+            <a asp-action="Index" asp-controller="Page" asp-route-pageId="@item.Category.Id" asp-route-pageType="@PageEnums.PageType.Category">@item.Category.Name</a>
+            <a asp-action="PageEditor" asp-controller="Page" asp-route-pageId="@item.Category.Id" asp-route-pageType="@PageEnums.PageType.Category">-edit </a>
+          </h2>
+          <ul>
+            @if (item.Products != null)
+            {
+              @foreach (var subitem in item.Products)
+              {
+                <li>
+
+                  <a asp-action="Index" asp-controller="Page" asp-route-pageId="@subitem.Product.Id" asp-route-pageType="@PageEnums.PageType.Product">@subitem.Product.Name</a>
+                  <a asp-action="PageEditor" asp-controller="Page" asp-route-pageId="@subitem.Product.Id" asp-route-DirectoryId="@item.Category.Id" asp-route-pageType="@PageEnums.PageType.Product">- edit</a>
+                </li>
+              }
+              <li>
+                <a asp-action="PageEditor" asp-controller="Page" asp-route-pageId="0" asp-route-DirectoryId="@item.Category.Id" asp-route-pageType="@PageEnums.PageType.Product">- create Material</a>
+              </li>
+            }
+          </ul>
+        </li>
+      }
+      <li>
+        <h2>
+          <a asp-action="PageEditor" asp-controller="Page" asp-route-pageId="0" asp-route-pageType="@PageEnums.PageType.Category">- create Directory</a>
+        </h2>
+      </li>
+    </ul>
+  </div>
+</div>

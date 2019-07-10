@@ -1,0 +1,38 @@
+﻿@using PresentationLayer.models;
+@using DataLayer.Enum;
+@model PageViewModel
+
+
+@if (Model is CategoryViewModel)
+{
+  var _currentModel = (CategoryViewModel)Model;
+  <h1>@_currentModel.Category.Name</h1>
+  <ul>
+    @if (_currentModel.Products != null)
+    {
+      @foreach (var subitem in _currentModel.Products)
+      {
+        <li>
+          <h3><a asp-action="Index" asp-controller="Page" asp-route-pageId="@subitem.Product.Id" asp-route-pageType="@PageEnums.PageType.Product">@subitem.Product.Name</a></h3>
+        </li>
+      }
+    }
+  </ul>
+}
+else if (Model is ProductViewModel)
+{
+  var _currentModel = (ProductViewModel)Model;
+  <h1>@_currentModel.Product.Name</h1>
+  <h2>@_currentModel.Product.Title</h2>
+  <h3>Price: @_currentModel.Product.Price</h3>
+  @if (_currentModel.NextProduct != null)
+  {
+    <ul>
+      <li>
+        <h3><a asp-action="Index" asp-controller="Page" asp-route-pageId="@_currentModel.NextProduct.Id" asp-route-pageType="@PageEnums.PageType.Product">@_currentModel.NextProduct.Name</a></h3>
+      </li>
+    </ul>
+  }
+}
+
+

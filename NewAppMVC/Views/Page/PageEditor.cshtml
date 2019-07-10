@@ -1,0 +1,37 @@
+﻿@using PresentationLayer.models;
+@using DataLayer.Enum;
+@model PageEditModel
+
+
+@if (Model is CategoryEditModel)
+{
+  var _currentModel = (CategoryEditModel)Model;
+  <form action="/Page/SaveCategory" method="post">
+    <input type="hidden" name="PageType" value="@ViewBag.PageType" />
+    <h1>Category edit form</h1>
+
+    <input name="Id" type="hidden" value="@_currentModel.Id" />
+    <input name="Name" value="@_currentModel.Name" />
+    <input name="Title" value="@_currentModel.Title" />
+
+    <input type="submit" name="Отправить" />
+  </form>
+}
+
+else if (Model is ProductEditModel)
+{
+  var _currentModel = (ProductEditModel)Model;
+<form action="/Page/SaveProduct" method="post">
+  <input type="hidden" name="PageType" value="@ViewBag.PageType" />
+  <h1>Product edit form</h1>
+
+  <input name="Id" type="hidden" value="@_currentModel.Id" />
+  <input name="DirectoryId" type="hidden" value="@_currentModel.CategoryId" />
+  <input name="Name" value="@_currentModel.Name" />
+  <input name="Title" value="@_currentModel.Title" />
+  <input name="Price" value="@_currentModel.Price" />
+
+  <input type="submit" name="Отправить" />
+</form>
+}
+
